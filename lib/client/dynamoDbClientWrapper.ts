@@ -8,4 +8,9 @@ class DynamoDbClientWrapper{
         const client = new DynamoDBClient({})
         this.dynamoDbDocumentClient =  DynamoDBDocumentClient.from(client);
      }
+
+     public queryUser() {
+        this.dynamoDbDocumentClient.send
+     }
+
 }

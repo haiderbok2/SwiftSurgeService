@@ -1,16 +1,33 @@
 import { 
     QueryCommand,
     UpdateCommand,
+    UpdateCommandInput,
     GetCommand,
+    GetCommandInput,
     PutCommand,
     PutCommandInput
 
 } from "@aws-sdk/lib-dynamodb"
-import { KeyCondition } from "aws-cdk-lib/aws-appsync";
 
 export function buildPutCommand(tableName: string, entry: any): PutCommand {
     const putRequest: PutCommandInput = { Item: entry, TableName: tableName};
     return new PutCommand(putRequest);
+}
+
+export function buildGetCommand(tableName: string, entry: any): GetCommand {
+    const getRequest: GetCommandInput = {Key: entry, TableName: tableName};
+    return new GetCommand(getRequest);
+}
+
+export function buildUpdateCommand(tableName: string, entry: any, updateExpression: string, expressionAttributeValues: any): UpdateCommand{
+    const updateRequest: UpdateCommandInput = {
+        Key: entry,
+        TableName: tableName,
+        UpdateExpression: updateExpression,
+        ExpressionAttributeValues: expressionAttributeValues
+    };
+
+    return new UpdateCommand(updateRequest);
 }
 
 export function buildQueryCommand(
