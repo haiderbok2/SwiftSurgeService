@@ -9,12 +9,17 @@ export class SwiftSurgeServiceStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
+
+
+    const userDDBTable = new DynamoDbUserTable(this, "table", {});
+
+  
     new SwiftSurgeLambda(this, "location", {
       funcitonName: "update-user-location",
-      entry: path.join(__dirname, "handlers/location-handler.ts")
-    });
+      entry: path.join(__dirname, "handlers/location-handler.ts"),
+    },userDDBTable.userTable.tableArn);
+    
 
-    new DynamoDbUserTable(this, "table", {})
 
   }
 }
